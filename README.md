@@ -4,7 +4,8 @@ Exhibitions is a system for archiving and publishing Bachelor of Fine Arts, and 
 
 # Use Case
 
-[Use Case Diagram](https://lucid.app/documents/view/acb266b4-feca-4ad0-8783-ed5de9d81044)
+![Use Case Diagram](https://lucid.app/publicSegments/view/0e6c0c59-1256-4c0e-aa86-65e52ac564a7/image.jpeg "Use Case Diagram")
+[View on Lucidchart](https://lucid.app/documents/view/acb266b4-feca-4ad0-8783-ed5de9d81044)
 
 __Use Case Name:__ Exhibitions Use Case
 
