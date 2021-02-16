@@ -6,7 +6,7 @@ The Chico State art department recently began publishing images and details for 
 
 Exhibitions will be a system that enables the college of art to catalog and share exhibition images and details.  Components of the system will include a web based interface, a controlling server, a relational database and file storage.
 
-![Block Diagram](https://lucid.app/publicSegments/view/a6a383a6-f7e1-49f9-9fcd-87a9bfd17e29/image.png)"Block Diagram"
+![Block Diagram](https://lucid.app/publicSegments/view/a6a383a6-f7e1-49f9-9fcd-87a9bfd17e29/image.png) "Block Diagram"
 
 ## Value Proposition
 ### Current experience
