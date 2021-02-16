@@ -8,8 +8,10 @@ __Use Case Purpose:__ Provides ability to publish images of a BFA/MFA culiminati
 
 __Optimisitic flow:__
 1. Staff enters Student information into system
-2. Staff uploads Student artwork
-3. Staff groups artwork into Exhibition
-4. Staff publishes Exhibition
-5. Student shares Exhibition (e.g. Hanshake, LinkedIn)
-6. Community views Exhibition
+1. Student (and Staff) uploads Student artwork
+1. Student uplaods Artist Statement
+1. Student uploads Show Card
+1. Staff groups artwork into Exhibition
+1. Staff publishes Exhibition
+1. Student and Staff send Show Card
+1. Community views Exhibition
