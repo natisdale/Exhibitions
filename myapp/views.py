@@ -1,4 +1,8 @@
-from django.http import HttpResponse
+#from django.http import HttpResponse
+from django.shortcuts import render
 
-def home(request):
-    return HttpResponse("Construction in progress")
+def index(request):
+    context = {
+        "title":"Exhibitions",
+        "body":"template body",}
+    return render(request, "index.html", context=context)
