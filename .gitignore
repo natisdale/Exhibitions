@@ -239,3 +239,8 @@ Temporary Items
 
 # VSCode
 .vscode/
+
+# Media Folders
+images/
+media/
+user??/

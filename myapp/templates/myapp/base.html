@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static %}
+        <meta charset="utf-8"/>
+        <title>{{ title }}</title>
+        <meta name="author" content={{author}}/>
+        <meta name="description" content={{desc}}/>
+        <meta name="keywords" content={{keywards}}/>
+        <link rel="shortcut icon" type="image/png" href="{% static 'favicon-32x32.png' %}"/>
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'css/foundation.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/app.css' %}"/>
+    </head>
+    <body>
+        {% include "header.html" %}
+        {% block content %}
+        {% endblock %}
+        {% include "footer.html" %}
+        <script src="{% static 'js/vendor/jquery.js' %}"></script>
+        <script src="{% static 'js/vendor/what-input.js' %}"></script>
+        <script src="{% static 'js/vendor/foundation.js' %}"></script>
+        {% block scripts %}
+        {% endblock %}
+        <script src="{% static 'js/app.js' %}"></script>
+    </body>
+</html>

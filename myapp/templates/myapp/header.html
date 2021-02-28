@@ -1,0 +1,16 @@
+<!-- Hover Underline Menu by Val Ery: https://get.foundation/building-blocks/blocks/hover-underline-menu.html -->
+<header>
+    <nav class="hover-underline-menu" data-menu-underline-from-center>
+      <ul class="menu align-center">
+        <li><a href = "#">Home</a></li>
+        {% if user.is_authenticated %}
+          <li><a href = "logout">Logout</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+    <div class="topbar-right">
+      {% if user.is_authenticated %}
+        <p>Active User: {{ user.username }}</p>
+      {% endif %}
+    </div>
+  </header>
