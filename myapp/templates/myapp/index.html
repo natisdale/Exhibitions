@@ -2,7 +2,15 @@
 {% load static %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-
+    {% if not user.is_authenticated %}
+        {% include "landing.html" %}
+    {% else %}
+        {% if is_staff %}
+        {% include "staff.html" %}
+        {% else %}
+        {% include "student.html" %}
+        {% endif %} <!-- End of is instructor-->
+    {% endif %} <!--End of is_authenticated-->
 {% endblock %}
 
 {% block scripts %}

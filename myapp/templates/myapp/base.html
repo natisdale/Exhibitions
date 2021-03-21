@@ -6,7 +6,7 @@
         <title>{{ title }}</title>
         <meta name="author" content={{author}}/>
         <meta name="description" content={{desc}}/>
-        <meta name="keywords" content={{keywards}}/>
+        <meta name="keywords" content={{keywords}}/>
         <link rel="shortcut icon" type="image/png" href="{% static 'favicon-32x32.png' %}"/>
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,8 +21,8 @@
         <script src="{% static 'js/vendor/jquery.js' %}"></script>
         <script src="{% static 'js/vendor/what-input.js' %}"></script>
         <script src="{% static 'js/vendor/foundation.js' %}"></script>
+        <script src="{% static 'js/app.js' %}"></script>
         {% block scripts %}
         {% endblock %}
-        <script src="{% static 'js/app.js' %}"></script>
     </body>
 </html>

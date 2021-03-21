@@ -9,13 +9,15 @@ from django.contrib.auth import logout
 from django.http import JsonResponse
 import json
 
-def isStudent(user):
-    return user.groups.filter(name="Students").exists()
+def isStaff(user):
+    return user.is_staff
 
 def index(request):
+    is_staff = False
     if request.user.is_authenticated:
-        if isStudent(request.user):
+        if isStaff(request.user):
             exhibitions = models.Exhibition.objects.all()
+            is_staff = True
         else:
             exhibitions = models.Exhibition.objects.filter(student=request.user)
     else:
@@ -24,8 +26,9 @@ def index(request):
         "title":"Exhibitions",
         "author":"Nathan Tisdale",
         "description":"BFA & MFA Exhibitions",
-        "keywoards":"CINS490, html, css, python, django, vue.js",
+        "keywords":"CINS490, html, css, python, django, vue.js",
         "body":"template body",
+        "is_staff":is_staff,
         "exhibitions":exhibitions,
     }
     return render(request, "index.html", context=context)
@@ -48,3 +51,25 @@ def register(request):
         "form":form_instance,
     }
     return render(request, "register.html", context=context)
+
+
+def getExhibitions(request):
+    if not request.user.is_authenticated:
+        resultSet = models.Exhibition.objects.filter(public=True).order_by('startDate').reverse()
+    else:
+        if request.user.is_staff:
+            resultSet = models.Exhibition.objects.all().order_by('startDate').reverse()
+        else:
+            resultSet = models.Exhibition.objects.filter(student=request.user)
+    exhibitionList = {}
+    exhibitionList["exhibitions"] = []
+    for result in resultSet:
+        temp = {}
+        temp["id"] = result.id
+        temp["title"] = result.title
+        temp["student"] = result.student.first_name + ' ' + result.student.last_name
+        temp["startDate"] = result.startDate
+        temp["endDate"] = result.endDate
+        temp["flyer"] = result.flyer.url
+        exhibitionList["exhibitions"] += [temp]
+    return JsonResponse(exhibitionList)
