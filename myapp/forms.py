@@ -27,7 +27,7 @@ class ExhibitionForm(forms.Form):
         choices=models.Exhibition.TYPE,
         initial='BFA',
     )
-    flyer = forms.ImageField(required=False)
+    flyer = forms.ImageField(required=True)
     startDate = forms.DateField(
         label="Start Date",
         required=False,
@@ -40,22 +40,24 @@ class ExhibitionForm(forms.Form):
     )
     public = forms.BooleanField(
         initial=False,
+        required=False,
     )
 
     def save(self, request):
         newExhibition = models.Exhibition()
-        newExhibition.student = self.cleaned_data("student")
-        newExhibition.title = self.cleaned_data("title")
-        newExhibition.degree = self.cleaned_data("degree")
-        newExhibition.flyer = request.FILES['image']
-        newExhibition.startDate = self.cleaned_data("startDate")
-        newExhibition.endDate = self.cleaned_data("endDate") 
+        newExhibition.student = self.cleaned_data["student"]
+        newExhibition.title = self.cleaned_data["title"]
+        newExhibition.degree = self.cleaned_data["degree"]
+        newExhibition.flyer = request.FILES['flyer']
+        newExhibition.startDate = self.cleaned_data["startDate"]
+        newExhibition.endDate = self.cleaned_data["endDate"]
+        return newExhibition
 
 class ArtForm(forms.Form):
     title = forms.CharField(label="Title")
     exhibition = forms.ModelChoiceField(queryset=models.Exhibition.objects.all())
     image = forms.ImageField(
-        required=False
+        required=True
     )
 
     def save(self, request):
@@ -63,6 +65,7 @@ class ArtForm(forms.Form):
         newArt.title = self.cleaned_data("title")
         newArt.exhibition = self.cleaned_data("exhibition")
         newArt.image = request.FILES['image']
+        return newArt
 
 
 class RegistrationForm(UserCreationForm):

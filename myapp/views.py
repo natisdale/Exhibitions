@@ -73,3 +73,23 @@ def getExhibitions(request):
         temp["flyer"] = result.flyer.url
         exhibitionList["exhibitions"] += [temp]
     return JsonResponse(exhibitionList)
+
+
+@login_required
+def exhibition(request):
+    if isStaff(request.user):
+        if request.method == "POST":
+            form = forms.ExhibitionForm(request.POST)
+            if form.is_valid():
+                form.save(request)
+                return redirect("/")
+        else:
+            form = forms.ExhibitionForm()
+    else:
+        redirect("/")
+    context = {
+        "title":"Exhibition",
+        "is_staff": isStaff(request.user),
+        "form": form,
+    }
+    return render(request, "exhibition.html", context=context)

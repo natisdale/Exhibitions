@@ -5,6 +5,9 @@
         <li><a href = "#">Home</a></li>
         {% if user.is_authenticated %}
           <li><a href = "logout">Logout</a></li>
+          {% if user.is_staff %}
+            <li><a href = "exhibition/">Exhibition</a></li>
+          {% endif %}
         {% else %}
           <li><a href="{% url 'login' %}">Log In</a></li>
           <li><a href="{% url 'register' %}">Sign Up</a></li>
