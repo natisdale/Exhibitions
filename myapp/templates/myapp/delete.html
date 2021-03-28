@@ -2,15 +2,12 @@
 {% load static %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-    {% if not user.is_authenticated %}
-        {% include "landing_public.html" %}
-    {% else %}
-        {% if is_staff %}
-        {% include "landing_staff.html" %}
-        {% else %}
-        {% include "landing_student.html" %}
-        {% endif %} <!-- End of is instructor-->
-    {% endif %} <!--End of is_authenticated-->
+    <p>Are you sure you want to delete "{{ item }}"?</p>
+    <form action="{% url 'delete_exhibition' item.pk %}" method="POST">
+        {% csrf_token %}
+        <a href="{% url 'home' %}">Cancel</a>
+        <input type="submit" name="Confirm">
+    </form>
 {% endblock %}
 
 {% block scripts %}

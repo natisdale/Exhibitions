@@ -2,21 +2,16 @@
 <header>
     <nav class="hover-underline-menu" data-menu-underline-from-center>
       <ul class="menu align-center">
-        <li><a href = "#">Home</a></li>
+        <li><a href = "{% url 'home' %}">Home</a></li>
         {% if user.is_authenticated %}
-          <li><a href = "logout">Logout</a></li>
-          {% if user.is_staff %}
-            <li><a href = "exhibition/">Exhibition</a></li>
-          {% endif %}
+            {% if user.is_staff %}
+                <li><a href="{% url 'create_exhibition' %}">New Exhibition</a></li>
+            {% endif %}
+            <li><a href = "logout">Logout {{ user.username }}</a></div></li>
         {% else %}
           <li><a href="{% url 'login' %}">Log In</a></li>
           <li><a href="{% url 'register' %}">Sign Up</a></li>
         {% endif %}
       </ul>
     </nav>
-    <div class="topbar-right">
-      {% if user.is_authenticated %}
-        <p>Active User: {{ user.username }}</p>
-      {% endif %}
-    </div>
   </header>

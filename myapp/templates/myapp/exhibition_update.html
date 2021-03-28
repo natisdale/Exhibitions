@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}{{ title }}{% endblock %}
+{% block title %}Edit Exhibition{% endblock %}
 {% block content %}
-    {% if not user.is_authenticated %}
-        {% include "landing_public.html" %}
-    {% else %}
-        {% if is_staff %}
-        {% include "landing_staff.html" %}
-        {% else %}
-        {% include "landing_student.html" %}
-        {% endif %} <!-- End of is instructor-->
-    {% endif %} <!--End of is_authenticated-->
+<div class="form-group">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <button class="btn btn-secondary">Update</button>
+    </form>
+    
+</div>
 {% endblock %}
 
 {% block scripts %}

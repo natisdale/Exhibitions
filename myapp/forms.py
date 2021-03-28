@@ -1,6 +1,7 @@
 import datetime
 
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from . import models
@@ -52,6 +53,11 @@ class ExhibitionForm(forms.Form):
         newExhibition.startDate = self.cleaned_data["startDate"]
         newExhibition.endDate = self.cleaned_data["endDate"]
         return newExhibition
+
+class ExhibitionForm2(ModelForm):
+    class Meta:
+        model = models.Exhibition
+        fields = '__all__'
 
 class ArtForm(forms.Form):
     title = forms.CharField(label="Title")

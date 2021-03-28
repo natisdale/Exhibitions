@@ -5,12 +5,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', views.index),
+    path('', views.index, name='home'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', views.logout_view),
     path('register/', views.register, name='register'),
     path('exhibitions/', views.getExhibitions),
-    path('exhibition/', views.exhibition),
+    path('exhibition/create', views.createExhibition, name='create_exhibition'),
+    path('exhibition/view/<int:pk>', views.viewExhibition, name='view_exhibition'),
+    path('exhibition/edit/<int:pk>', views.updateExhibition, name='edit_exhibition'),
+    path('exhibition/delete/<int:pk>', views.deleteExhibition, name='delete_exhibition'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -76,20 +76,62 @@ def getExhibitions(request):
 
 
 @login_required
-def exhibition(request):
+def createExhibition(request):
     if isStaff(request.user):
         if request.method == "POST":
             form = forms.ExhibitionForm(request.POST)
             if form.is_valid():
                 form.save(request)
-                return redirect("/")
+                return redirect('/')
         else:
             form = forms.ExhibitionForm()
     else:
-        redirect("/")
+        redirect('/')
     context = {
         "title":"Exhibition",
         "is_staff": isStaff(request.user),
         "form": form,
     }
-    return render(request, "exhibition.html", context=context)
+    return render(request, "exhibition_create.html", context=context)
+
+
+def viewExhibition(request, pk):
+    exhibition = models.Exhibition.objects.get(pk=pk)
+    works = models.ArtWork.objects.filter(exhibition=pk)
+    if exhibition.degree == 'B':
+        type = 'BFA'
+    else:
+        type = 'MFA'
+    context = {
+        "title":"Edit Exhibition",
+        "is_staff": isStaff(request.user),
+        "exhibition": exhibition,
+        "works": works,
+        "type": type,
+    }
+    return render(request, 'exhibition_view.html', context=context)
+
+
+def updateExhibition(request, pk):
+    exhibition = models.Exhibition.objects.get(pk=pk)
+    if request.method == "POST":
+        form = forms.ExhibitionForm2(request.POST, instance=exhibition)
+        if form.is_valid():
+                form.save(request)
+                return redirect('/')
+    else:
+        form = forms.ExhibitionForm2(instance=exhibition)
+    context = {
+        "title":"Edit Exhibition",
+        "is_staff": isStaff(request.user),
+        "form": form,
+    }
+    return render(request, 'exhibition_update.html', context=context)
+
+def deleteExhibition(request, pk):
+    exhibition = models.Exhibition.objects.get(pk=pk)
+    if request.method == "POST":
+        exhibition.delete()
+        return redirect('/')
+    context = {'item': exhibition}
+    return render(request, 'delete.html', context)
