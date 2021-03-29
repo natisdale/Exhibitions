@@ -55,8 +55,8 @@ coverage.xml
 *.log
 local_settings.py
 db.sqlite3
-.myapp/migrations/
-.init.sh
+init.sh
+myapp/migrations/*
 
 # Flask stuff:
 instance/
@@ -246,3 +246,6 @@ Temporary Items
 images/
 media/
 user??/
+
+
+
