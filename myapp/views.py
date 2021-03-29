@@ -115,7 +115,7 @@ def viewExhibition(request, pk):
 def updateExhibition(request, pk):
     exhibition = models.Exhibition.objects.get(pk=pk)
     if request.method == "POST":
-        form = forms.ExhibitionForm2(request.POST, instance=exhibition)
+        form = forms.ExhibitionForm2(request.POST, request.FILES, instance=exhibition)
         if form.is_valid():
                 form.save(request)
                 return redirect('/')
@@ -134,7 +134,7 @@ def deleteExhibition(request, pk):
         exhibition.delete()
         return redirect('/')
     context = {'item': exhibition}
-    return render(request, 'delete.html', context)
+    return render(request, 'exhibition_delete.html', context)
 
 @login_required
 def createArtWork(request):
@@ -161,3 +161,41 @@ def createArtWork(request):
         #"exhibition": exhibition,
     }
     return render(request, "artwork_create.html", context=context)
+
+
+@login_required
+def updateArtWork(request, pk):
+    '''
+    Create a new ArtWork object
+    '''
+    artwork = models.ArtWork.objects.get(pk=pk)
+    print(artwork)
+    #exhibition = models.Exhibition.objects.get(pk=pk)
+    if isStaff(request.user):
+        if request.method == "POST":
+            form = forms.ArtForm(request.POST, request.FILES, instance=artwork)
+            #form.exhibition = exhibition
+            if form.is_valid():
+                form.save(request)
+                return redirect('/')
+        else:
+            form = forms.ArtForm(instance=artwork)
+            #form.exhibition = exhibition
+    else:
+        return redirect('/')
+    context = {
+        "title": 'Update Artwork',
+        "is_staff": isStaff(request.user),
+        "form": form,
+        "artwork": artwork,
+    }
+    return render(request, "artwork_update.html", context=context)
+
+
+def deleteArtWork(request, pk):
+    artwork = models.ArtWork.objects.get(pk=pk)
+    if request.method == "POST":
+        artwork.delete()
+        return redirect('/')
+    context = {'item': artwork}
+    return render(request, 'artwork_delete.html', context)

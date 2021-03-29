@@ -1,15 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Edit Exhibition{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 {% block content %}
-<div class="form-group">
-    <form method="POST" enctype="multipart/form-data">
+    <p>Are you sure you want to delete "{{ item }}"?</p>
+    <form action="{% url 'delete_artwork' item.pk %}" method="POST">
         {% csrf_token %}
-        {{ form }}
-        <button class="btn btn-secondary">Update</button>
+        <a href="{% url 'home' %}">Cancel</a>
+        <input type="submit" name="Confirm">
     </form>
-    
-</div>
 {% endblock %}
 
 {% block scripts %}

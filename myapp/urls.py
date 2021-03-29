@@ -17,6 +17,8 @@ urlpatterns = [
     path('exhibition/edit/<int:pk>', views.updateExhibition, name='edit_exhibition'),
     path('exhibition/delete/<int:pk>', views.deleteExhibition, name='delete_exhibition'),
     path('artwork/create', views.createArtWork, name='create_artwork'),
+    path('artwork/update/<int:pk>', views.updateArtWork, name='update_artwork'),
+    path('artwork/delete/<int:pk>', views.deleteArtWork, name='delete_artwork'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
