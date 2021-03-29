@@ -28,7 +28,7 @@ class ExhibitionForm(forms.Form):
         choices=models.Exhibition.TYPE,
         initial='BFA',
     )
-    flyer = forms.ImageField(required=True)
+    flyer = forms.ImageField(required=False)
     startDate = forms.DateField(
         label="Start Date",
         required=False,
@@ -59,7 +59,7 @@ class ExhibitionForm2(ModelForm):
         model = models.Exhibition
         fields = '__all__'
 
-class ArtForm(forms.Form):
+class OLDArtForm(forms.Form):
     title = forms.CharField(label="Title")
     exhibition = forms.ModelChoiceField(queryset=models.Exhibition.objects.all())
     image = forms.ImageField(
@@ -73,6 +73,10 @@ class ArtForm(forms.Form):
         newArt.image = request.FILES['image']
         return newArt
 
+class ArtForm(ModelForm):
+    class Meta:
+        model = models.ArtWork
+        fields = '__all__'
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(

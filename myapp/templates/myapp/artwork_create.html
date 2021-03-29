@@ -6,9 +6,9 @@
         <div class="grid-x grid-padding-x align-center">
             <div id="exhibitionPanel" class="small-10 medium-8 large-6">
             <h1>New Exhibition</h1>
-            <form action="/exhibition/create" method="POST" enctype="multipart/form-data">
+            <form action="/artwork/create" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form }}
+                {{ form.as_p }}
                 <button id="saveButton" class="success button">Save</button>
             </form>
             </div>

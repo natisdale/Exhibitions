@@ -79,12 +79,12 @@ def getExhibitions(request):
 def createExhibition(request):
     if isStaff(request.user):
         if request.method == "POST":
-            form = forms.ExhibitionForm(request.POST)
+            form = forms.ExhibitionForm2(request.POST, request.FILES)
             if form.is_valid():
                 form.save(request)
                 return redirect('/')
         else:
-            form = forms.ExhibitionForm()
+            form = forms.ExhibitionForm2()
     else:
         return redirect('/')
     context = {
@@ -92,7 +92,7 @@ def createExhibition(request):
         "is_staff": isStaff(request.user),
         "form": form,
     }
-    return render(request, "exhibition.html", context=context)
+    return render(request, "exhibition_create.html", context=context)
 
 
 def viewExhibition(request, pk):
@@ -135,3 +135,29 @@ def deleteExhibition(request, pk):
         return redirect('/')
     context = {'item': exhibition}
     return render(request, 'delete.html', context)
+
+@login_required
+def createArtWork(request):
+    '''
+    Create a new ArtWork object
+    '''
+    #exhibition = models.Exhibition.objects.get(pk=pk)
+    if isStaff(request.user):
+        if request.method == "POST":
+            form = forms.ArtForm(request.POST, request.FILES)
+            #form.exhibition = exhibition
+            if form.is_valid():
+                form.save(request)
+                return redirect('/')
+        else:
+            form = forms.ArtForm()
+            #form.exhibition = exhibition
+    else:
+        return redirect('/')
+    context = {
+        "title":"Create Art Work",
+        "is_staff": isStaff(request.user),
+        "form": form,
+        #"exhibition": exhibition,
+    }
+    return render(request, "artwork_create.html", context=context)

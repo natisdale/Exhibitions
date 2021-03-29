@@ -9,6 +9,7 @@
                 {{ exhibition.student.first_name }} {{exhibition.student.last_name}} {{ type }}
             </h2>
             <p>{{ exhibition.startDate}} through {{ exhibition.endDate }}</p>
+            <a href="{% url 'create_artwork' %}">Add Art</a>
             <img src="{{ exhibition.flyer.url }}" alt="{{ exhibition.title }}" width="100%" />
             <p><hr></p>
             {% for w in works %}
