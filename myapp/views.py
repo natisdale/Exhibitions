@@ -86,13 +86,13 @@ def createExhibition(request):
         else:
             form = forms.ExhibitionForm()
     else:
-        redirect('/')
+        return redirect('/')
     context = {
         "title":"Exhibition",
         "is_staff": isStaff(request.user),
         "form": form,
     }
-    return render(request, "exhibition_create.html", context=context)
+    return render(request, "exhibition.html", context=context)
 
 
 def viewExhibition(request, pk):

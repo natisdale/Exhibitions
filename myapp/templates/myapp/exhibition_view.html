@@ -2,17 +2,24 @@
 {% load static %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-    <h1>{{ exhibition.title }}</h1>
-    <h2>{{ exhibition.student.first_name }} {{exhibition.student.last_name}} {{ type }}</h2>
-    <p>{{ exhibition.startDate}} through {{ exhibition.endDate }}</p>
-    <img src="{{ exhibition.flyer.url }}" alt="{{ exhibition.title }}" width="100%" />
-    {% if not user.is_authenticated %}
-        {% for w in works %}
-            <img src="{{ w.image.url }}" alt="{{ w.title }}" width="100%" />
-        {% endfor %}
-    {% else %}
-        {% if request.user == }
-    {% endif %} <!--End of is_authenticated-->
+    <div class="grid-x grid-padding-x align-center">
+        <h1>{{ exhibition.title }}</h1>
+        <div class="small-12 medium-10 large-8">
+            <h2>
+                {{ exhibition.student.first_name }} {{exhibition.student.last_name}} {{ type }}
+            </h2>
+            <p>{{ exhibition.startDate}} through {{ exhibition.endDate }}</p>
+            <img src="{{ exhibition.flyer.url }}" alt="{{ exhibition.title }}" width="100%" />
+            <p><hr></p>
+            {% for w in works %}
+                <img src="{{ w.image.url }}" alt="{{ w.title }}" width="100%" />
+                {% if user.is_authenticated %}
+                    <p>edit delete</p>
+                {% endif %} <!--End of is_authenticated-->
+                <p><hr></p>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}
