@@ -64,6 +64,19 @@ def getUserExhibition(instance):
     return Exhibition.objects.filter(user=instance.user).first()
 
 
+class Mentor(models.Model):
+    firstName = models.CharField(max_length=20)
+    lastName = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.lastName + ', ' + self.firstName
+
+class Category(models.Model):
+    name = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.name
+
 class Exhibition(models.Model):
     student = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -101,6 +114,8 @@ class Exhibition(models.Model):
         blank=True,
         null=True,
     )
+    mentors = models.ManyToManyField(Mentor)
+    categories = models.ManyToManyField(Category)
 
     def __str__(self):
         return self.title

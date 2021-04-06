@@ -18,8 +18,9 @@ from . import models
 #     add_fieldsets = UserAdmin.add_fieldsets
 
 # admin.site.register(models.CustomUser, CustomUserAdmin)
-admin.site.register(models.ArtWork)
-admin.site.register(models.Exhibition)
-
 
 # Register your models here.
+admin.site.register(models.ArtWork)
+admin.site.register(models.Exhibition)
+admin.site.register(models.Category)
+admin.site.register(models.Mentor)
