@@ -27,6 +27,8 @@
                 {% endfor %}
                 </ul>
             {% endif %}
+            <h3>Artist Statement</h3>
+            <section>{{ exhibition.artistStatement|linebreaks }}</section>
             <p><hr></p>
             {% for w in works %}
                 <img src="{{ w.image.url }}" alt="{{ w.title }}" width="100%" />
