@@ -98,6 +98,8 @@ def createExhibition(request):
 def viewExhibition(request, pk):
     exhibition = models.Exhibition.objects.get(pk=pk)
     works = models.ArtWork.objects.filter(exhibition=pk)
+    mentors = exhibition.mentors.all()
+    categories = exhibition.categories.all()
     if exhibition.degree == 'B':
         type = 'BFA'
     else:
@@ -108,6 +110,8 @@ def viewExhibition(request, pk):
         "exhibition": exhibition,
         "works": works,
         "type": type,
+        "mentors": mentors,
+        "categories": categories,
     }
     return render(request, 'exhibition_view.html', context=context)
 

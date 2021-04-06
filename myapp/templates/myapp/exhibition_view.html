@@ -11,6 +11,22 @@
             <p>{{ exhibition.startDate}} through {{ exhibition.endDate }}</p>
             <a href="{% url 'create_artwork' %}">Add Art</a>
             <img src="{{ exhibition.flyer.url }}" alt="{{ exhibition.title }}" width="100%" />
+            {% if mentors %}
+                <h3>Mentors</h3>
+                <ul>
+                {% for mentor in mentors %}
+                    <li>{{ mentor }}</li>    
+                {% endfor %}
+                </ul>
+            {% endif %}
+            {% if categories %}
+                <h3>Categories</h3>
+                <ul>
+                {% for category in categories %}
+                    <li>{{ category }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
             <p><hr></p>
             {% for w in works %}
                 <img src="{{ w.image.url }}" alt="{{ w.title }}" width="100%" />
