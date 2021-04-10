@@ -166,7 +166,7 @@ def createArtWork(request, pk):
                 form.save(request)
                 return redirect('/')
         else:
-            form = forms.ArtForm()
+            form = forms.ArtForm(initial={'exhibition': exhibition})
             #form.exhibition = exhibition
     else:
         return redirect('/')
