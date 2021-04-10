@@ -9,7 +9,15 @@
                 {{ exhibition.student.first_name }} {{exhibition.student.last_name}} {{ type }}
             </h2>
             <p>{{ exhibition.startDate}} through {{ exhibition.endDate }}</p>
-            <a href="{% url 'create_artwork' %}">Add Art</a>
+            <a href="mailto:?subject={{ exhibition.title }} Exhibition at Chico State&body={{ emailBody }}"
+                target=”_new” 
+                rel=noopener 
+                noreferrer>
+                Share
+            </a>
+            {% if is_staff or is_artist %}
+                <a href="{% url 'create_artwork' exhibition.pk %}">Add Art</a>
+            {% endif %}
             <img src="{{ exhibition.flyer.url }}" alt="{{ exhibition.title }}" width="100%" />
             {% if mentors %}
                 <h3>Mentors</h3>

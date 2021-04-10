@@ -2,10 +2,10 @@
 {% load static %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-    {% if is_staff %}
+    {% if is_staff or is_artist %}
         <div class="grid-x grid-padding-x align-center">
             <div id="exhibitionPanel" class="small-10 medium-8 large-6">
-            <h1>New Exhibition</h1>
+            <h1>New Artwork</h1>
             <form action="/artwork/create" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}

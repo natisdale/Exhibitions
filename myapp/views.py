@@ -97,6 +97,13 @@ def createExhibition(request):
 
 def viewExhibition(request, pk):
     exhibition = models.Exhibition.objects.get(pk=pk)
+    if request.user.is_authenticated:
+        if request.user == exhibition.student:
+            isArtist = True
+        else:
+            isArtist = False
+    else:
+        isArtist = False
     works = models.ArtWork.objects.filter(exhibition=pk)
     mentors = exhibition.mentors.all()
     categories = exhibition.categories.all()
@@ -104,14 +111,19 @@ def viewExhibition(request, pk):
         type = 'BFA'
     else:
         type = 'MFA'
+    baseUrl = 'http://localhost:8000/' #'https://exhibition.csuchico.edu/'
+    flyerUrl = baseUrl + exhibition.flyer.name
+    emailBody =  'Check out the ' + exhibition.title + ' exhibition at Chico State: ' + baseUrl + 'exhibition/view/' + str(exhibition.pk) + '/'
     context = {
         "title":"Edit Exhibition",
         "is_staff": isStaff(request.user),
+        "is_artist": isArtist,
         "exhibition": exhibition,
         "works": works,
         "type": type,
         "mentors": mentors,
         "categories": categories,
+        "emailBody": emailBody,
     }
     return render(request, 'exhibition_view.html', context=context)
 
@@ -141,15 +153,15 @@ def deleteExhibition(request, pk):
     return render(request, 'exhibition_delete.html', context)
 
 @login_required
-def createArtWork(request):
+def createArtWork(request, pk):
     '''
     Create a new ArtWork object
     '''
-    #exhibition = models.Exhibition.objects.get(pk=pk)
-    if isStaff(request.user):
+    exhibition = models.Exhibition.objects.get(pk=pk)
+    isArtist = request.user==exhibition.student
+    if isStaff(request.user) or isArtist:
         if request.method == "POST":
             form = forms.ArtForm(request.POST, request.FILES)
-            #form.exhibition = exhibition
             if form.is_valid():
                 form.save(request)
                 return redirect('/')
@@ -161,6 +173,7 @@ def createArtWork(request):
     context = {
         "title":"Create Art Work",
         "is_staff": isStaff(request.user),
+        "is_artist": isArtist,
         "form": form,
         #"exhibition": exhibition,
     }
