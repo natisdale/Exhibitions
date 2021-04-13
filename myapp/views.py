@@ -8,6 +8,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.http import JsonResponse
 import json
+import matplotlib
+from matplotlib import pyplot
+import numpy
 
 def isStaff(user):
     return user.is_staff
@@ -216,3 +219,41 @@ def deleteArtWork(request, pk):
         return redirect('/')
     context = {'item': artwork}
     return render(request, 'artwork_delete.html', context)
+
+
+def generateDegreePieChart():
+    ''' Pie Chart to illustrate ration of BFA to MFA exhibitions '''
+    bfa = models.Exhibition.objects.filter(degree='B').count()
+    mfa = models.Exhibition.objects.filter(degree='M').count()
+    
+    labels = 'BFA', 'MFA'
+    sizes = bfa, mfa
+    explode = (0.1, 0)
+    fig1, ax1 = pyplot.subplots()
+    ax1.pie(
+        sizes,
+        explode=explode,
+        labels=labels,
+        autopct='%1.1f%%',
+        shadow=True,
+        startangle=90
+    )
+    ax1.axis('equal')
+    pyplot.savefig('media/bfaMfaPieChart.png')
+
+def generateCategoryChart():
+    ''' Generate bar chart for categories e.g. Ceramic, Painting, etc '''
+    categories = models.Category.objects.all()
+    categoryCounts = {}
+    for c in categories:
+        categoryCounts.update(c, models.Exhibition.objects.filter(categories=c).count())
+    
+
+def dashboard(request):
+    ''' Gerenate charts for Dashboard '''
+    generateDegreePieChart()
+
+    context = {
+        "title": 'Exhibitions Dashboard'
+    }
+    return render(request, "dashboard.html", context=context)
