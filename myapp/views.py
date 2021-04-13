@@ -240,18 +240,34 @@ def generateDegreePieChart():
     )
     ax1.axis('equal')
     pyplot.savefig('media/bfaMfaPieChart.png')
+    fig1.clear()
 
-def generateCategoryChart():
+
+
+def generateCategoryBarChart():
     ''' Generate bar chart for categories e.g. Ceramic, Painting, etc '''
     categories = models.Category.objects.all()
     categoryCounts = {}
     for c in categories:
-        categoryCounts.update(c, models.Exhibition.objects.filter(categories=c).count())
-    
+        categoryCounts.update({c: models.Exhibition.objects.filter(categories=c).count()})
+    pyplot.bar(
+        range(len(categoryCounts)),
+        list(categoryCounts.values()),
+        align='center'
+    )
+    pyplot.xticks(
+        range(len(categoryCounts)),
+        categoryCounts.keys(),
+        rotation=45
+    )
+    pyplot.gcf().subplots_adjust(bottom=0.25)
+    pyplot.savefig('media/categoryBarChart.png')
+
 
 def dashboard(request):
     ''' Gerenate charts for Dashboard '''
     generateDegreePieChart()
+    generateCategoryBarChart()
 
     context = {
         "title": 'Exhibitions Dashboard'
