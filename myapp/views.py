@@ -253,7 +253,7 @@ def generateCategoryBarChart():
     pyplot.bar(
         range(len(categoryCounts)),
         list(categoryCounts.values()),
-        align='center'
+        align='center',
     )
     pyplot.xticks(
         range(len(categoryCounts)),
