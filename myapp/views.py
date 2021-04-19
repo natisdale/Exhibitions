@@ -11,6 +11,7 @@ import json
 import matplotlib
 from matplotlib import pyplot
 import numpy
+from .filters import ExhibitionFilter
 
 def isStaff(user):
     return user.is_staff
@@ -19,12 +20,12 @@ def index(request):
     is_staff = False
     if request.user.is_authenticated:
         if isStaff(request.user):
-            exhibitions = models.Exhibition.objects.all()
+            exhibitions = models.Exhibition.objects.all()[:8]
             is_staff = True
         else:
-            exhibitions = models.Exhibition.objects.filter(student=request.user)
+            exhibitions = models.Exhibition.objects.filter(student=request.user)[:8]
     else:
-        exhibitions = models.Exhibition.objects.filter(public=True)
+        exhibitions = models.Exhibition.objects.filter(public=True)[:8]
     context = {
         "title":"Exhibitions",
         "author":"Nathan Tisdale",
@@ -313,3 +314,22 @@ def createCategory(request):
         "form": form,
     }
     return render(request, "category_create.html", context=context)
+
+
+def filter(request):
+    is_staff = False
+    exhibitions = models.Exhibition.objects.filter(public=True)
+    exhibitionFilter = ExhibitionFilter(request.GET, queryset=exhibitions)
+    exhibitions = exhibitionFilter.qs
+    context = {
+        "title":"Exhibitions - Filter",
+        "author":"Nathan Tisdale",
+        "description":"BFA & MFA Exhibitions",
+        "keywords":"CINS490, html, css, python, django, vue.js",
+        "body":"template body",
+        "is_staff":is_staff,
+        "exhibitions":exhibitions,
+        "exhibitionFilter":exhibitionFilter,
+    }
+    return render(request, "filter.html", context=context)
+

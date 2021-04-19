@@ -22,6 +22,7 @@ urlpatterns = [
     path('mentor/create', views.createMentor, name='create_mentor'),
     path('category/create', views.createCategory, name='create_category'),
     path('dashboard',views.dashboard, name='dashboard'),
+    path('search', views.filter, name='search'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
