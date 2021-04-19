@@ -91,7 +91,7 @@ def createExhibition(request):
     else:
         return redirect('/')
     context = {
-        "title":"Exhibition",
+        "title":"Exhibitions - View Exhibition",
         "is_staff": isStaff(request.user),
         "form": form,
     }
@@ -118,7 +118,7 @@ def viewExhibition(request, pk):
     flyerUrl = baseUrl + exhibition.flyer.name
     emailBody =  'Check out the ' + exhibition.title + ' exhibition at Chico State: ' + baseUrl + 'exhibition/view/' + str(exhibition.pk) + '/'
     context = {
-        "title":"Edit Exhibition",
+        "title":"Exhibitions -  Edit Exhibition",
         "is_staff": isStaff(request.user),
         "is_artist": isArtist,
         "exhibition": exhibition,
@@ -174,7 +174,7 @@ def createArtWork(request, pk):
     else:
         return redirect('/')
     context = {
-        "title":"Create Art Work",
+        "title":"Exhibitions - Create Artwork",
         "is_staff": isStaff(request.user),
         "is_artist": isArtist,
         "form": form,
@@ -204,7 +204,7 @@ def updateArtWork(request, pk):
     else:
         return redirect('/')
     context = {
-        "title": 'Update Artwork',
+        "title": 'Exhibitions - Update Artwork',
         "is_staff": isStaff(request.user),
         "form": form,
         "artwork": artwork,
@@ -270,6 +270,46 @@ def dashboard(request):
     generateCategoryBarChart()
 
     context = {
-        "title": 'Exhibitions Dashboard'
+        "title": 'Exhibitions - Dashboard'
     }
     return render(request, "dashboard.html", context=context)
+
+
+@login_required
+def createMentor(request):
+    if isStaff(request.user):
+        if request.method == "POST":
+            form = forms.MentorForm(request.POST)
+            if form.is_valid():
+                form.save(request)
+                return redirect('/')
+        else:
+            form = forms.MentorForm()
+    else:
+        return redirect('/')
+    context = {
+        "title":"Exhibitions - New Mentor",
+        "is_staff": isStaff(request.user),
+        "form": form,
+    }
+    return render(request, "mentor_create.html", context=context)
+
+
+@login_required
+def createCategory(request):
+    if isStaff(request.user):
+        if request.method == "POST":
+            form = forms.CategoryForm(request.POST)
+            if form.is_valid():
+                form.save(request)
+                return redirect('/')
+        else:
+            form = forms.CategoryForm()
+    else:
+        return redirect('/')
+    context = {
+        "title":"Exhibitions - New Category",
+        "is_staff": isStaff(request.user),
+        "form": form,
+    }
+    return render(request, "category_create.html", context=context)

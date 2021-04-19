@@ -78,6 +78,19 @@ class ArtForm(ModelForm):
         model = models.ArtWork
         fields = '__all__'
 
+
+class MentorForm(ModelForm):
+    class Meta:
+        model = models.Mentor
+        fields = '__all__'
+
+
+class CategoryForm(ModelForm):
+    class Meta:
+        model = models.Category
+        fields = '__all__'
+
+
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(
         label="Email",
