@@ -28,7 +28,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['']
 
 
 # Application definition
@@ -131,5 +131,5 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 LOGOUT_REDIRECT_URL = '/'
 
-if 'WEBSITE_HOSTNAME' in os.environ: # Running on Azure
-    from .azure import *
+# if 'WEBSITE_HOSTNAME' in os.environ: # Running on Azure
+#     from .azure import *
