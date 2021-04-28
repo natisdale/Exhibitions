@@ -34,8 +34,8 @@ class AzureMediaStorage(AzureStorage):
     expiration_secs = None
 
 
-DEFAULT_FILE_STORAGE = 'AzureMediaStorage'
-STATICFILES_STORAGE = 'AzureStaticStorage'
+DEFAULT_FILE_STORAGE = 'myproject.azure.AzureMediaStorage'
+STATICFILES_STORAGE = 'myproject.azure.AzureStaticStorage'
 AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
 STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_STATIC_CONTAINER}'
 MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_MEDIA_CONTAINER}'
