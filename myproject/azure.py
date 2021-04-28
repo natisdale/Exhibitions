@@ -22,15 +22,15 @@ AZURE_MEDIA_CONTAINER = os.environ['AZURE_MEDIA_CONTAINER']
 AZURE_STATIC_CONTAINER = os.environ['AZURE_STATIC_CONTAINER']
 
 class AzureStaticStorage(AzureStorage):
-    account_name = AZURE_ACCOUNT_NAME
-    account_key = AZURE_STORAGE_KEY
-    azure_container = 'static'
+    account_name = os.environ['AZURE_ACCOUNT_NAME']
+    account_key = os.environ['AZURE_STORAGE_KEY']
+    azure_container = os.environ['AZURE_STATIC_CONTAINER']
     expiration_secs = None
 
 class AzureMediaStorage(AzureStorage):
-    account_name = AZURE_ACCOUNT_NAME
-    account_key = AZURE_STORAGE_KEY
-    azure_container = 'media'
+    account_name = os.environ['AZURE_ACCOUNT_NAME']
+    account_key = os.environ['AZURE_STORAGE_KEY']
+    azure_container = os.environ['AZURE_MEDIA_CONTAINER']
     expiration_secs = None
 
 
