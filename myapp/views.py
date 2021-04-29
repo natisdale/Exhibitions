@@ -225,6 +225,14 @@ def deleteArtWork(request, pk):
     return render(request, 'artwork_delete.html', context)
 
 
+def getMediaStorage():
+    if 'WEBSITE_HOSTNAME' in os.environ: # Running on Azure
+        import azure
+        return azure.DEFAULT_FILE_STORAGE
+    else:
+        return 'media/'
+    
+
 def generateDegreePieChart():
     ''' Pie Chart to illustrate ration of BFA to MFA exhibitions '''
     bfa = models.Exhibition.objects.filter(degree='B').count()
@@ -243,7 +251,8 @@ def generateDegreePieChart():
         startangle=90
     )
     ax1.axis('equal')
-    pyplot.savefig('bfaMfaPieChart.png')
+    location = getMediaStorage() + 'bfaMfaPieChart.png'
+    pyplot.savefig(location)
     fig1.clear()
 
 
@@ -265,21 +274,24 @@ def generateCategoryBarChart():
         rotation=45
     )
     pyplot.gcf().subplots_adjust(bottom=0.25)
-    pyplot.savefig('media/categoryBarChart.png')
+    location = getMediaStorage() + 'categoryBarChart.png'
+    pyplot.savefig(location)
 
+
+def getMediaUrl():
+    if 'WEBSITE_HOSTNAME' in os.environ: # Running on Azure
+        return 'https://exhibitions.blob.core.windows.net/media/'
+    else:
+        return '/'
 
 def dashboard(request):
     ''' Gerenate charts for Dashboard '''
     generateDegreePieChart()
     generateCategoryBarChart()
-
-    if 'WEBSITE_HOSTNAME' in os.environ: # Running on Azure
-        location = 'https://exhibitions.blob.core.windows.net/media/'
-    else:
-        location = 'media/'
+    
     context = {
         "title": 'Exhibitions - Dashboard',
-        "location": location
+        "location": getMediaUrl()
     }
     return render(request, "dashboard.html", context=context)
 
