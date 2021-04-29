@@ -133,4 +133,4 @@ LOGIN_URL = '/login/'
 LOGOUT_REDIRECT_URL = '/'
 
 if 'WEBSITE_HOSTNAME' in os.environ: # Running on Azure
-    from .azure_custom import *
+    from .azure import *
