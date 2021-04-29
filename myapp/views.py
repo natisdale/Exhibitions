@@ -13,7 +13,10 @@ import matplotlib
 from matplotlib import pyplot
 import numpy
 from .filters import ExhibitionFilter
-
+# Used for writing charts to Azure blob container
+from io import BytesIO
+from storages.backends.azure_storage import AzureStorage
+from storages.backends.azure_storage import BlockBlobService
 
 def isStaff(user):
     return user.is_staff
@@ -224,14 +227,6 @@ def deleteArtWork(request, pk):
     return render(request, 'artwork_delete.html', context)
 
 
-def getMediaStorage():
-    if 'WEBSITE_HOSTNAME' in os.environ: # Running on Azure
-        import azure
-        return 'myproject.azure.AzureMediaStorage'
-    else:
-        return 'media/'
-    
-
 def generateDegreePieChart():
     ''' Pie Chart to illustrate ration of BFA to MFA exhibitions '''
     bfa = models.Exhibition.objects.filter(degree='B').count()
@@ -246,12 +241,23 @@ def generateDegreePieChart():
         explode=explode,
         labels=labels,
         autopct='%1.1f%%',
-        shadow=True,
+        shadow=False,
         startangle=90
     )
     ax1.axis('equal')
-    location = getMediaStorage() + 'bfaMfaPieChart.png'
-    pyplot.savefig(location)
+
+    if 'WEBSITE_HOSTNAME' in os.environ: # Running on Azure
+        imageStream = BytesIO()
+        pyplot.savefig(imageStream)
+        # reset stream's position to 0
+        imageStream.seek(0)
+        # upload in blob storage
+        connectString = os.environ['AZURE_CONNECT_STRING']
+        container_client = BlockBlobService.ContainerClient.from_container_url(connectString)
+        blob_client = container_client.get_blob_client(blob = "bfaMfaPieChart.png")
+        blob_client.upload_blob(image_stream.read(), blob_type="BlockBlob") 
+    else:
+        pyplot.savefig('media/bfaMfaPieChart.png')
     fig1.clear()
 
 
@@ -273,8 +279,20 @@ def generateCategoryBarChart():
         rotation=45
     )
     pyplot.gcf().subplots_adjust(bottom=0.25)
-    location = getMediaStorage() + 'categoryBarChart.png'
-    pyplot.savefig(location)
+
+    if 'WEBSITE_HOSTNAME' in os.environ: # Running on Azure
+        imageStream = BytesIO()
+        pyplot.savefig(imageStream)
+        # reset stream's position to 0
+        imageStream.seek(0)
+        # upload in blob storage
+        connectString = os.environ['AZURE_CONNECT_STRING']
+        container_client = BlockBlobService.ContainerClient.from_container_url(connectString)
+        blob_client = container_client.get_blob_client(blob = "categoryBarChart.png")
+        blob_client.upload_blob(image_stream.read(), blob_type="BlockBlob")
+        fig1.clear()
+    else:
+        pyplot.savefig('media/categoryBarChart.png')
 
 
 def getMediaUrl():
@@ -283,11 +301,37 @@ def getMediaUrl():
     else:
         return '/'
 
+
+# def dashboard(request):
+#     degrees = {}
+#     labels = []
+#     data = []
+#     total = 0
+
+#     resultset = models.Exhibition.objects.all()
+#     for e in resultset:
+#         total += 1
+#         if e.degree not in degrees:
+#             degrees[e.degree] = 1
+#         else:
+#             degrees[e.degree] += 1
+        
+#     for d in degrees:
+#         labels.append(d)
+#         data.append(int(degrees[d] / total))
+
+#     context = {
+#         "title": 'Exhibitions - Dashboard',
+#         "labels": labels,
+#         "data": data,
+#     }
+#     return render(request, "dashboard.html", context=context)
+
 def dashboard(request):
     ''' Gerenate charts for Dashboard '''
     generateDegreePieChart()
     generateCategoryBarChart()
-    
+
     context = {
         "title": 'Exhibitions - Dashboard',
         "location": getMediaUrl()
