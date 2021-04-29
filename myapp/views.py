@@ -251,9 +251,9 @@ def generateDegreePieChart():
         # reset stream's position to 0
         imageStream.seek(0)
         # upload in blob storage
-        connectString = os.environ['AZURE_CONNECT_STRING']
-        blobServiceClient = BlobServiceClient.from_connection_string(connectString)
-        blobClient = blobServiceClient.get_blob_client(blob = "bfaMfaPieChart.png")
+        blobSasUrl = os.environ['AZURE_BLOB_SAS_URL']
+        containerClient = ContainerClient.from_container_url(blobSasUrl)
+        blobClient = containerClient.get_blob_client(blob = "bfaMfaPieChart.png")
         blobClient.upload_blob(image_stream.read(), blob_type="BlockBlob") 
     else:
         pyplot.savefig('media/bfaMfaPieChart.png')
@@ -285,9 +285,9 @@ def generateCategoryBarChart():
         # reset stream's position to 0
         imageStream.seek(0)
         # upload in blob storage
-        connectString = os.environ['AZURE_CONNECT_STRING']
-        blobServiceClient = BlobServiceClient.from_connection_string(connectString)
-        blobClient = blobServiceClient.get_blob_client(blob = "categoryBarChart.png")
+        blobSasUrl = os.environ['AZURE_BLOB_SAS_URL']
+        containerClient = ContainerClient.from_container_url(blobSasUrl)
+        blobClient = containerClient.get_blob_client(blob = "categoryBarChart.png")
         blobCclient.upload_blob(image_stream.read(), blob_type="BlockBlob")
         fig1.clear()
     else:
