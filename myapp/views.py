@@ -15,7 +15,6 @@ import numpy
 from .filters import ExhibitionFilter
 
 
-
 def isStaff(user):
     return user.is_staff
 
@@ -228,7 +227,7 @@ def deleteArtWork(request, pk):
 def getMediaStorage():
     if 'WEBSITE_HOSTNAME' in os.environ: # Running on Azure
         import azure
-        return azure.DEFAULT_FILE_STORAGE
+        return 'myproject.azure.AzureMediaStorage'
     else:
         return 'media/'
     
