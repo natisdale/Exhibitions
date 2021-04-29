@@ -1,3 +1,4 @@
+import os
 #from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from . import models
@@ -12,6 +13,8 @@ import matplotlib
 from matplotlib import pyplot
 import numpy
 from .filters import ExhibitionFilter
+
+
 
 def isStaff(user):
     return user.is_staff
@@ -240,7 +243,7 @@ def generateDegreePieChart():
         startangle=90
     )
     ax1.axis('equal')
-    pyplot.savefig('media/bfaMfaPieChart.png')
+    pyplot.savefig('bfaMfaPieChart.png')
     fig1.clear()
 
 
@@ -270,8 +273,13 @@ def dashboard(request):
     generateDegreePieChart()
     generateCategoryBarChart()
 
+    if 'WEBSITE_HOSTNAME' in os.environ: # Running on Azure
+        location = 'https://exhibitions.blob.core.windows.net/media/'
+    else:
+        location = 'media/'
     context = {
-        "title": 'Exhibitions - Dashboard'
+        "title": 'Exhibitions - Dashboard',
+        "location": location
     }
     return render(request, "dashboard.html", context=context)
 
