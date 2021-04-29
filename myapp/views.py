@@ -15,8 +15,7 @@ import numpy
 from .filters import ExhibitionFilter
 # Used for writing charts to Azure blob container
 from io import BytesIO
-from storages.backends.azure_storage import AzureStorage
-from storages.backends.azure_storage import BlockBlobService
+from azure.storage.blob import ContainerClient
 
 def isStaff(user):
     return user.is_staff
@@ -253,7 +252,7 @@ def generateDegreePieChart():
         imageStream.seek(0)
         # upload in blob storage
         connectString = os.environ['AZURE_CONNECT_STRING']
-        container_client = BlockBlobService.ContainerClient.from_container_url(connectString)
+        container_client = ContainerClient.from_connection_string(connectString)# .from_container_url(connectString)
         blob_client = container_client.get_blob_client(blob = "bfaMfaPieChart.png")
         blob_client.upload_blob(image_stream.read(), blob_type="BlockBlob") 
     else:
@@ -287,7 +286,7 @@ def generateCategoryBarChart():
         imageStream.seek(0)
         # upload in blob storage
         connectString = os.environ['AZURE_CONNECT_STRING']
-        container_client = BlockBlobService.ContainerClient.from_container_url(connectString)
+        container_client = ContainerClient.from_connection_string(connectString)# .from_container_url(connectString)
         blob_client = container_client.get_blob_client(blob = "categoryBarChart.png")
         blob_client.upload_blob(image_stream.read(), blob_type="BlockBlob")
         fig1.clear()
