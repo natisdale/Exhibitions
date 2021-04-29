@@ -15,7 +15,7 @@ import numpy
 from .filters import ExhibitionFilter
 # Used for writing charts to Azure blob container
 from io import BytesIO
-from azure.storage.blob import BlobServiceClient
+from azure.storage.blob import BlobClient
 
 def isStaff(user):
     return user.is_staff
@@ -251,10 +251,18 @@ def generateDegreePieChart():
         # reset stream's position to 0
         imageStream.seek(0)
         # upload in blob storage
-        blobSasUrl = os.environ['AZURE_BLOB_SAS_URL']
-        containerClient = ContainerClient.from_container_url(blobSasUrl)
-        blobClient = containerClient.get_blob_client(blob = "bfaMfaPieChart.png")
-        blobClient.upload_blob(image_stream.read(), blob_type="BlockBlob") 
+        # blobSasUrl = os.environ['AZURE_BLOB_SAS_URL']
+        # containerClient = ContainerClient.from_container_url(blobSasUrl)
+        # blobClient = containerClient.get_blob_client(blob = "bfaMfaPieChart.png")
+        # blobClient.upload_blob(image_stream.read(), blob_type="BlockBlob") 
+        connectionString = os.environ['AZURE_CONNECT_STRING']
+        containerName = os.environ['AZURE_MEDIA_CONTAINER']
+        blobClient = BlobClient.from_connection_string(
+            conn_str=connectionString,
+            containter_name=containerName,
+            blob_name="bfaMfaPieChart.png"
+        )
+        blobclient.upload(imageStream.read())
     else:
         pyplot.savefig('media/bfaMfaPieChart.png')
     fig1.clear()
@@ -285,11 +293,18 @@ def generateCategoryBarChart():
         # reset stream's position to 0
         imageStream.seek(0)
         # upload in blob storage
-        blobSasUrl = os.environ['AZURE_BLOB_SAS_URL']
-        containerClient = ContainerClient.from_container_url(blobSasUrl)
-        blobClient = containerClient.get_blob_client(blob = "categoryBarChart.png")
-        blobCclient.upload_blob(image_stream.read(), blob_type="BlockBlob")
-        fig1.clear()
+        # blobSasUrl = os.environ['AZURE_BLOB_SAS_URL']
+        # containerClient = ContainerClient.from_container_url(blobSasUrl)
+        # blobClient = containerClient.get_blob_client(blob = "categoryBarChart.png")
+        # blobCclient.upload_blob(image_stream.read(), blob_type="BlockBlob")
+        connectionString = os.environ['AZURE_CONNECT_STRING']
+        containerName = os.environ['AZURE_MEDIA_CONTAINER']
+        blobClient = BlobClient.from_connection_string(
+            conn_str=connectionString,
+            containter_name=containerName,
+            blob_name="bfaMfaPieChart.png"
+        )
+        blobclient.upload(imageStream.read())
     else:
         pyplot.savefig('media/categoryBarChart.png')
 
