@@ -13,9 +13,7 @@ import matplotlib
 from matplotlib import pyplot
 import numpy
 from .filters import ExhibitionFilter
-# Used for writing charts to Azure blob container
-from io import BytesIO
-from azure.storage.blob import BlobClient
+
 
 def isStaff(user):
     return user.is_staff
@@ -246,23 +244,24 @@ def generateDegreePieChart():
     ax1.axis('equal')
 
     if 'WEBSITE_HOSTNAME' in os.environ: # Running on Azure
-        imageStream = BytesIO()
-        pyplot.savefig(imageStream)
-        # reset stream's position to 0
-        imageStream.seek(0)
-        # upload in blob storage
-        # blobSasUrl = os.environ['AZURE_BLOB_SAS_URL']
-        # containerClient = ContainerClient.from_container_url(blobSasUrl)
-        # blobClient = containerClient.get_blob_client(blob = "bfaMfaPieChart.png")
-        # blobClient.upload_blob(image_stream.read(), blob_type="BlockBlob") 
-        connectionString = os.environ['AZURE_CONNECT_STRING']
-        containerName = os.environ['AZURE_MEDIA_CONTAINER']
-        blobClient = BlobClient.from_connection_string(
-            conn_str=connectionString,
-            containter_name=containerName,
-            blob_name="bfaMfaPieChart.png"
-        )
-        blobclient.upload(imageStream.read())
+        # imageStream = BytesIO()
+        # pyplot.savefig(imageStream)
+        # # reset stream's position to 0
+        # imageStream.seek(0)
+        # # upload in blob storage
+        # # blobSasUrl = os.environ['AZURE_BLOB_SAS_URL']
+        # # containerClient = ContainerClient.from_container_url(blobSasUrl)
+        # # blobClient = containerClient.get_blob_client(blob = "bfaMfaPieChart.png")
+        # # blobClient.upload_blob(image_stream.read(), blob_type="BlockBlob") 
+        # connectionString = os.environ['AZURE_CONNECT_STRING']
+        # containerName = os.environ['AZURE_MEDIA_CONTAINER']
+        # blobClient = BlobClient.from_connection_string(
+        #     conn_str=connectionString,
+        #     containter_name=containerName,
+        #     blob_name="bfaMfaPieChart.png"
+        # )
+        # blobclient.upload(imageStream.read())
+        pass
     else:
         pyplot.savefig('media/bfaMfaPieChart.png')
     fig1.clear()
@@ -288,23 +287,24 @@ def generateCategoryBarChart():
     pyplot.gcf().subplots_adjust(bottom=0.25)
 
     if 'WEBSITE_HOSTNAME' in os.environ: # Running on Azure
-        imageStream = BytesIO()
-        pyplot.savefig(imageStream)
-        # reset stream's position to 0
-        imageStream.seek(0)
-        # upload in blob storage
-        # blobSasUrl = os.environ['AZURE_BLOB_SAS_URL']
-        # containerClient = ContainerClient.from_container_url(blobSasUrl)
-        # blobClient = containerClient.get_blob_client(blob = "categoryBarChart.png")
-        # blobCclient.upload_blob(image_stream.read(), blob_type="BlockBlob")
-        connectionString = os.environ['AZURE_CONNECT_STRING']
-        containerName = os.environ['AZURE_MEDIA_CONTAINER']
-        blobClient = BlobClient.from_connection_string(
-            conn_str=connectionString,
-            containter_name=containerName,
-            blob_name="bfaMfaPieChart.png"
-        )
-        blobclient.upload(imageStream.read())
+        # imageStream = BytesIO()
+        # pyplot.savefig(imageStream)
+        # # reset stream's position to 0
+        # imageStream.seek(0)
+        # # upload in blob storage
+        # # blobSasUrl = os.environ['AZURE_BLOB_SAS_URL']
+        # # containerClient = ContainerClient.from_container_url(blobSasUrl)
+        # # blobClient = containerClient.get_blob_client(blob = "categoryBarChart.png")
+        # # blobCclient.upload_blob(image_stream.read(), blob_type="BlockBlob")
+        # connectionString = os.environ['AZURE_CONNECT_STRING']
+        # containerName = os.environ['AZURE_MEDIA_CONTAINER']
+        # blobClient = BlobClient.from_connection_string(
+        #     conn_str=connectionString,
+        #     containter_name=containerName,
+        #     blob_name="bfaMfaPieChart.png"
+        # )
+        # blobclient.upload(imageStream.read())
+        pass
     else:
         pyplot.savefig('media/categoryBarChart.png')
 
@@ -343,8 +343,8 @@ def getMediaUrl():
 
 def dashboard(request):
     ''' Gerenate charts for Dashboard '''
-    generateDegreePieChart()
-    generateCategoryBarChart()
+    # generateDegreePieChart()
+    # generateCategoryBarChart()
 
     context = {
         "title": 'Exhibitions - Dashboard',
