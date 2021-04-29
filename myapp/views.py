@@ -15,7 +15,7 @@ import numpy
 from .filters import ExhibitionFilter
 # Used for writing charts to Azure blob container
 from io import BytesIO
-from azure.storage.blob import ContainerClient
+from azure.storage.blob import BlobServiceClient
 
 def isStaff(user):
     return user.is_staff
@@ -252,9 +252,9 @@ def generateDegreePieChart():
         imageStream.seek(0)
         # upload in blob storage
         connectString = os.environ['AZURE_CONNECT_STRING']
-        container_client = ContainerClient.from_connection_string(connectString)# .from_container_url(connectString)
-        blob_client = container_client.get_blob_client(blob = "bfaMfaPieChart.png")
-        blob_client.upload_blob(image_stream.read(), blob_type="BlockBlob") 
+        blobServiceClient = BlobServiceClient.from_connection_string(connectString)
+        blobClient = blobServiceClient.get_blob_client(blob = "bfaMfaPieChart.png")
+        blobClient.upload_blob(image_stream.read(), blob_type="BlockBlob") 
     else:
         pyplot.savefig('media/bfaMfaPieChart.png')
     fig1.clear()
@@ -286,9 +286,9 @@ def generateCategoryBarChart():
         imageStream.seek(0)
         # upload in blob storage
         connectString = os.environ['AZURE_CONNECT_STRING']
-        container_client = ContainerClient.from_connection_string(connectString)# .from_container_url(connectString)
-        blob_client = container_client.get_blob_client(blob = "categoryBarChart.png")
-        blob_client.upload_blob(image_stream.read(), blob_type="BlockBlob")
+        blobServiceClient = BlobServiceClient.from_connection_string(connectString)
+        blobClient = blobServiceClient.get_blob_client(blob = "categoryBarChart.png")
+        blobCclient.upload_blob(image_stream.read(), blob_type="BlockBlob")
         fig1.clear()
     else:
         pyplot.savefig('media/categoryBarChart.png')
