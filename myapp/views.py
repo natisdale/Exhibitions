@@ -410,3 +410,43 @@ def filter(request):
     }
     return render(request, "filter.html", context=context)
 
+def degreePieChart(request):
+    '''
+    Adapted from https://simpleisbetterthancomplex.com/tutorial/2020/01/19/how-to-use-chart-js-with-django.html
+    '''
+    labels = [ 'bfa', 'mfa' ]
+    counts = {
+        'B': 0,
+        'M': 0,
+    }
+    exhibitions = models.Exhibition.objects.filter(public=True)
+    for e in exhibitions:
+        counts[e.degree] +=1
+    
+    data = [ counts['B'], counts['M'] ]
+
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })
+
+def yearsBarChart(request):
+    '''
+    Adapted from https://simpleisbetterthancomplex.com/tutorial/2020/01/19/how-to-use-chart-js-with-django.html
+    '''
+    labels = []
+    counts = {}
+    data = []
+    exhibitions = models.Exhibition.objects.filter(public=True)
+    for e in exhibitions:
+        counts[e.startDate.year] = 0
+    for e in exhibitions:
+        counts[e.startDate.year] +=1
+    for y in counts:
+        labels.append(y)
+        data.append(counts[y])
+
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })

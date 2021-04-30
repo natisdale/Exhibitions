@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'myapp',
     'django_filters',
     'storages',
+    'chartjs',
 ]
 
 MIDDLEWARE = [

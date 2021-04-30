@@ -2,13 +2,94 @@
 {% load static %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-    <div class="grid-x grid-padding-x align-center">
-        <div class="grid-x grid-padding-x align-center">
-            <h1>Dashboard</h1>
-            <img src="{{ location }}bfaMfaPieChart.png" alt="BFA/MFA Pie Chart"/>
-            <img src="{{ location }}categoryBarChart.png" alt="Category Bar Chart"/>
-        </div>
-    </div>
+<div class="small-12 medium-6 large-6">
+    <canvas id="degrees-chart" data-url="{% url 'degrees-chart' %}"></canvas>
+</div>
+<div class="small-12 medium-6 large-6">
+    <canvas id="years-chart" data-url="{% url 'years-chart' %}"></canvas>
+</div>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+
+    $(function () {
+
+      var $degreesChart = $("#degrees-chart");
+      $.ajax({
+        url: $degreesChart.data("url"),
+        success: function (data) {
+
+          var ctx = $degreesChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Culminating Show Types',
+                backgroundColor: ['#B7814F', '#8E8C13'],
+                data: data.data
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Culminating Show Types'
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+
+  </script>
+
+  <script>
+
+    $(function () {
+
+      var $yearsChart = $("#years-chart");
+      $.ajax({
+        url: $yearsChart.data("url"),
+        success: function (data) {
+
+          var ctx = $yearsChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Culminating Exhibitions per Year',
+                backgroundColor: '#582C83',
+                data: data.data
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Culminating Exhibitions per Year'
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+
+  </script>
 {% endblock %}
 
 {% block scripts %}

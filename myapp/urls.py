@@ -23,6 +23,8 @@ urlpatterns = [
     path('category/create', views.createCategory, name='create_category'),
     path('dashboard',views.dashboard, name='dashboard'),
     path('search', views.filter, name='search'),
+    path('degrees', views.degreePieChart, name='degrees-chart'),
+    path('years', views.yearsBarChart, name='years-chart'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
