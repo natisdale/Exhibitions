@@ -1,42 +1,30 @@
-<div class="grid-x grid-padding-x align-center">
-    <h1>Culminating Exhibitions</h1>
-    <div class="small-12 medium-10 large-8">
-      <div id="exhibitionsPanel">
-        <!-- <span v-if="unseen">
-          <table>
-            <tr v-for="e in exhibitions">
-              {% verbatim %}
-
-              <td>{{ e.title }}</td>
-              <td>{{ e.student }}</td>
-              {% endverbatim %}
-            </tr>
-          </table>
-        </span> -->
-          
-        <span v-if="seen">
+<main class="grid-container">
+    <article class="grid-x grid-padding-x">
+        <h1>Culminating Exhibitions</h1>
             {% for e in exhibitions %}
-            {% if e.flyer %}
-                <h2>
-                    {{ e.student.first_name }} {{e.student.last_name}}
-                    {% if e.degree == 'B' %}
-                        BFA
-                    {% else %}
-                        MFA
-                    {% endif %}
-                </h2>
-                <h3>{{ e.title }}</h3>
-                <a href="{% url 'edit_exhibition' e.pk %}">edit</a>
-                <a href="{% url 'delete_exhibition' e.pk %}">delete</a>
-                <a href="{% url 'view_exhibition' e.pk %}">
-                    <img src="{{ e.flyer.url }}" alt="{{ e.title }}" width="100%" />
-                </a>
-            {% endif %}
+            <section class="large-6 medium-6 small-12 cell">
+                {% if e.flyer %}
+                    <h2>
+                        {{ e.student.first_name }} {{e.student.last_name}}
+                    </h2>
+                    <h3>
+                        {% if e.degree == 'B' %}
+                            BFA
+                        {% else %}
+                            MFA
+                        {% endif %}
+                    </h3>
+                    <h4>{{ e.title }}</h4>
+                    <a href="{% url 'edit_exhibition' e.pk %}">edit</a>
+                    <a href="{% url 'delete_exhibition' e.pk %}">delete</a>
+                    <a href="{% url 'view_exhibition' e.pk %}">
+                        <img src="{{ e.flyer.url }}" alt="{{ e.title }}" width="100%" />
+                    </a>
+                {% endif %}
+            </section>
             {% endfor %}
-        </span>
-        </div>
-    </div>
-  </div>
+    </article>
+</main>
 
 
 
