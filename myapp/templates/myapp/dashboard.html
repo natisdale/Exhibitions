@@ -2,19 +2,23 @@
 {% load static %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-<div class="small-12 medium-4 large-4">
-    <canvas id="degrees-chart" data-url="{% url 'degrees-chart' %}"></canvas>
-</div>
-<div class="small-12 medium-4 large-4">
-    <canvas id="years-chart" data-url="{% url 'years-chart' %}"></canvas>
-</div>
-<div class="small-12 medium-4 large-4">
-    <canvas id="categories-chart" data-url="{% url 'categories-chart' %}"></canvas>
-</div>
-
+<main class="grid-container">
+    <div class="grid-x grid-padding-x">
+        <div class="large-6 medium-6 small-12 cell">
+            <canvas id="degrees-chart" data-url="{% url 'degrees-chart' %}"></canvas>
+        </div>
+        <div class="large-6 medium-6 small-12 cell">
+            <canvas id="years-chart" data-url="{% url 'years-chart' %}"></canvas>
+        </div>
+        <div class="large-12 medium-12 small-12 cell">
+            <canvas id="categories-chart" data-url="{% url 'categories-chart' %}"></canvas>
+        </div>
+    </div>
+</main>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
   <script>
+
 
     $(function () {
 

@@ -12,15 +12,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{% static 'css/foundation.css' %}"/>
         <link rel="stylesheet" href="{% static 'css/app.css' %}"/>
+        <meta class="foundation-mq">
     </head>
     <body>
         {% include "header.html" %}
         {% block content %}
         {% endblock %}
         {% include "footer.html" %}
-        <script src="{% static 'js/vendor/jquery.js' %}"></script>
+        <!-- <script src="{% static 'js/vendor/jquery.js' %}"></script>
         <script src="{% static 'js/vendor/what-input.js' %}"></script>
-        <script src="{% static 'js/vendor/foundation.js' %}"></script>
+        <script src="{% static 'js/vendor/foundation.js' %}"></script> -->
+        <script src="{% static 'js/vendor.js' %}"></script>
+        <script src="{% static 'js/foundation.js' %}"></script>
         <script src="{% static 'js/app.js' %}"></script>
         {% block scripts %}
         {% endblock %}
