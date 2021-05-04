@@ -2,11 +2,14 @@
 {% load static %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-<div class="small-12 medium-6 large-6">
+<div class="small-12 medium-4 large-4">
     <canvas id="degrees-chart" data-url="{% url 'degrees-chart' %}"></canvas>
 </div>
-<div class="small-12 medium-6 large-6">
+<div class="small-12 medium-4 large-4">
     <canvas id="years-chart" data-url="{% url 'years-chart' %}"></canvas>
+</div>
+<div class="small-12 medium-4 large-4">
+    <canvas id="categories-chart" data-url="{% url 'categories-chart' %}"></canvas>
 </div>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -28,7 +31,7 @@
               labels: data.labels,
               datasets: [{
                 label: 'Culminating Show Types',
-                backgroundColor: ['#B7814F', '#8E8C13'],
+                backgroundColor: ['#B25215', '#89360F'],
                 data: data.data
               }]          
             },
@@ -63,12 +66,16 @@
           var ctx = $yearsChart[0].getContext("2d");
 
           new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: {
               labels: data.labels,
               datasets: [{
                 label: 'Culminating Exhibitions per Year',
-                backgroundColor: '#582C83',
+                boderColor: '#433F34',
+                boderWidth: 3,
+                backgroundColor: '#DDD7C9',
+                pointBackgroundColor: '#433F34',
+                pointRadius: 5,
                 data: data.data
               }]          
             },
@@ -90,11 +97,52 @@
     });
 
   </script>
+
+  <script>
+
+    $(function () {
+
+      var $categoriesChart = $("#categories-chart");
+      $.ajax({
+        url: $categoriesChart.data("url"),
+        success: function (data) {
+
+          var ctx = $categoriesChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Culminating Exhibitions Categories',
+                backgroundColor: ['#960000', '#540303', '#B25215', '#B25215', '#433F34', '#6F695E'],
+                data: data.data
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Culminating Exhibitions Categories'
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+
+  </script>
+
 {% endblock %}
 
 {% block scripts %}
   <!-- development version of Vue.js, includes helpful console warnings -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <!-- production version of Vue.js, optimized for size and speed -->
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <!-- jsDelivr CDN for axios js-->

@@ -450,3 +450,23 @@ def yearsBarChart(request):
         'labels': labels,
         'data': data,
     })
+
+
+def categoryChart(request):
+    '''
+    Adapted from https://simpleisbetterthancomplex.com/tutorial/2020/01/19/how-to-use-chart-js-with-django.html
+    '''
+    labels = []
+    counts = {}
+    data = []
+    categories = models.Category.objects.all()
+    for c in categories:
+        counts[c.name] = models.Exhibition.objects.filter(categories__name__contains=c.name).count()
+    for c in counts:
+        labels.append(c)
+        data.append(counts[c])
+
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })

@@ -25,6 +25,7 @@ urlpatterns = [
     path('search', views.filter, name='search'),
     path('degrees', views.degreePieChart, name='degrees-chart'),
     path('years', views.yearsBarChart, name='years-chart'),
+    path('categories', views.categoryChart, name='categories-chart'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
