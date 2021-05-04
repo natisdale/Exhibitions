@@ -22,12 +22,12 @@ def index(request):
     is_staff = False
     if request.user.is_authenticated:
         if isStaff(request.user):
-            exhibitions = models.Exhibition.objects.all()[:8]
+            exhibitions = models.Exhibition.objects.all().order_by('-startDate')[:8]
             is_staff = True
         else:
             exhibitions = models.Exhibition.objects.filter(student=request.user)[:8]
     else:
-        exhibitions = models.Exhibition.objects.filter(public=True)[:8]
+        exhibitions = models.Exhibition.objects.filter(public=True).order_by('-startDate')[:8]
     context = {
         "title":"Exhibitions",
         "author":"Nathan Tisdale",
@@ -437,7 +437,7 @@ def yearsBarChart(request):
     labels = []
     counts = {}
     data = []
-    exhibitions = models.Exhibition.objects.filter(public=True)
+    exhibitions = models.Exhibition.objects.filter(public=True).order_by('startDate')
     for e in exhibitions:
         counts[e.startDate.year] = 0
     for e in exhibitions:
