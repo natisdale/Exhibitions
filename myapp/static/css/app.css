@@ -6,22 +6,22 @@ https://get.foundation/building-blocks/blocks/hover-underline-menu.html
 
 .hover-underline-menu {
     width: 100%;
-  }
+}
   
-  .hover-underline-menu .menu {
-    background-color: #2C2A29;
-  }
+.hover-underline-menu .menu {
+    background-color: #433F34;
+}
   
-  .hover-underline-menu .menu a {
+.hover-underline-menu .menu a {
     color: #fefefe;
     padding: 1.2rem 1.5rem;
-  }
+}
   
-  .hover-underline-menu .menu .underline-from-center {
+.hover-underline-menu .menu .underline-from-center {
     position: relative;
-  }
+}
   
-  .hover-underline-menu .menu .underline-from-center::after {
+.hover-underline-menu .menu .underline-from-center::after {
     content: "";
     position: absolute;
     top: calc(100% - 0.125rem);
@@ -29,38 +29,29 @@ https://get.foundation/building-blocks/blocks/hover-underline-menu.html
     left: 50%;
     right: 50%;
     transition: all 0.5s ease;
-  }
+}
   
-  .hover-underline-menu .menu .underline-from-center:hover::after {
+.hover-underline-menu .menu .underline-from-center:hover::after {
     left: 0;
     right: 0;
     transition: all 0.5s ease;
-  }
+}
   
   /* end Hover Underline Menu */
 
-  .bottom-bar {
-    text-align: center;
-    color: #fefefe;
-    background-color: #2C3840;
-  }
-
-  ul {
-    list-style: none;
-    margin-left: 0;
-  }
-  .button {
+.button {
     width: 100%;
-  }
+    background-color:  #102E52;
+}
 
-  .username {
-    text-transform: uppercase;
-    color: 0a0a0a;
-  }
+.alert button {
+    background-color: #B25215;
+}
 
 h1 {
     width: 100%;
     text-align: center;
+    color: #540303;
 }
 
 section {
