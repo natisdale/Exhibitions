@@ -38,5 +38,5 @@ Exhibitions will be a system that enables the college of art to catalog and shar
 - Week 7-8:	Mid-Term Status with Test Plans
 - Week 9-11:	Development and Testing
 - Week 12-13:	Preliminary Design and Prototype
-- Week 15:	Poster
+- Week 15:	[Poster](artifacts/poster.jpg)
 - Week 16;	Final Presentation & Project Portfolio Submission
