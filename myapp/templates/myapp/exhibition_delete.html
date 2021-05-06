@@ -2,19 +2,16 @@
 {% load static %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-    <p>Are you sure you want to delete "{{ item }}"?</p>
-    <form action="{% url 'delete_exhibition' item.pk %}" method="POST">
-        {% csrf_token %}
-        <a href="{% url 'home' %}">Cancel</a>
-        <input type="submit" name="Confirm">
-    </form>
-{% endblock %}
-
-{% block scripts %}
-  <!-- development version of Vue.js, includes helpful console warnings -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
-  <!-- production version of Vue.js, optimized for size and speed -->
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <!-- jsDelivr CDN for axios js-->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<main class="grid-container">
+    <article class="grid-x grid-padding-x">
+        <section class="large-12 medium-12 small-12 cell">
+            <p>Are you sure you want to delete "{{ item }}"?</p>
+            <form action="{% url 'delete_exhibition' item.pk %}" method="POST">
+                {% csrf_token %}
+                <a class="alert button" href="{% url 'home' %}">Cancel</a>
+                <input type="submit" class="button" name="Confirm">
+            </form>
+        </section>
+    </article>
+</main>
 {% endblock %}

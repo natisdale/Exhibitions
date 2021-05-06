@@ -1,22 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Edit Exhibition{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 {% block content %}
-<div class="form-group">
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <button class="btn btn-secondary">Update</button>
-    </form>
-    
-</div>
-{% endblock %}
-
-{% block scripts %}
-  <!-- development version of Vue.js, includes helpful console warnings -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
-  <!-- production version of Vue.js, optimized for size and speed -->
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <!-- jsDelivr CDN for axios js-->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <main class="grid-container">
+        <article class="grid-x grid-padding-x">
+            <section class="large-12 medium-12 small-12 cell">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form }}
+                    <button class="button">Update</button>
+                </form>
+            </section>
+        </article>
+    </main>
 {% endblock %}

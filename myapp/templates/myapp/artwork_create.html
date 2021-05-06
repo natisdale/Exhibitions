@@ -2,27 +2,18 @@
 {% load static %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-    {% if is_staff or is_artist %}
-        <div class="grid-x grid-padding-x align-center">
-            <div id="exhibitionPanel" class="small-10 medium-8 large-6">
-            <h1>New Artwork</h1>
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button id="saveButton" class="success button">Save</button>
-            </form>
-            </div>
-        </div>
-    {% else %}
-        
-    {% endif %}
-{% endblock %}
-
-{% block scripts %}
-  <!-- development version of Vue.js, includes helpful console warnings -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
-  <!-- production version of Vue.js, optimized for size and speed -->
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <!-- jsDelivr CDN for axios js-->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <main class="grid-container">
+        <article class="grid-x grid-padding-x">
+            <section class="large-12 medium-12 small-12 cell">
+                {% if is_staff or is_artist %}
+                        <h1>New Artwork</h1>
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button id="saveButton" class="button">Save</button>
+                        </form>
+                {% endif %}
+            </section>
+        </article>
+    </main>
 {% endblock %}
