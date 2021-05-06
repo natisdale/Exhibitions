@@ -40,3 +40,5 @@ Exhibitions will be a system that enables the college of art to catalog and shar
 - Week 12-13:	Preliminary Design and Prototype
 - Week 15:	[Poster](artifacts/poster.jpg)
 - Week 16;	Final Presentation & Project Portfolio Submission
+
+![Deployment Diagram](https://lucid.app/publicSegments/view/808d975b-2954-4a33-865c-df8979465092/image.jpeg? "Deployment Diagram")
